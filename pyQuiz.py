@@ -126,14 +126,17 @@ class Menu(object):
         examen = self.preguntas.get_examen(10)
 
         for pregunta in examen:
-            print(pregunta[2])
+            self.cls()
+
+            print("\n" + pregunta[2] + "\n")
             respuestas = self.preguntas.get_respuestas(pregunta[0])
 
             for counter, respuesta in enumerate(respuestas):
-                print(counter)
-                print(respuesta)
+                # print(counter)
+                #print(respuesta)
+                print("   " + str(counter+1) + " " + respuesta[3])
 
-            print("Indique su respuesta y pulse intro")
+            print("\nIndique su respuesta y pulse intro")
             input(">")
 
     def cls(self):
