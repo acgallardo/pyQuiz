@@ -111,7 +111,11 @@ class Menu(object):
             print("  2   Gestionar preguntas")
             print("  0   Salir ")
             print("\n\n")
-            seleccion = int(input("[0-2]>"))
+
+            try:
+                seleccion = int(input("[0-2]>"))
+            except ValueError:
+                seleccion = -1
 
             if(seleccion == 0):
                 exit = True
@@ -132,8 +136,6 @@ class Menu(object):
             respuestas = self.preguntas.get_respuestas(pregunta[0])
 
             for counter, respuesta in enumerate(respuestas):
-                # print(counter)
-                #print(respuesta)
                 print("   " + str(counter+1) + " " + respuesta[3])
 
             print("\nIndique su respuesta y pulse intro")
