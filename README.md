@@ -1,1 +1,3 @@
 # pyQuiz
+---
+Console quiz generator.
