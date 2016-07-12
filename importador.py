@@ -48,7 +48,7 @@ def main():
                 values(?, ? , ?)
             ''', (last_pregunta_id, row[3], row[4]))
 
-            db.commit()
+        db.commit()
 
 
 if __name__ == '__main__':
