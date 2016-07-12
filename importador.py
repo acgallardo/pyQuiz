@@ -36,17 +36,17 @@ def main():
                 last_tema = row[0]
                 last_tema_id = cursor.lastrowid
 
-            if row[1] != last_pregunta:
+            if row[2] != last_pregunta:
                 cursor.execute('''
                     INSERT INTO preguntas(id_tema, pregunta) values (? , ?)
-                ''', (last_tema_id, row[1]))
+                ''', (last_tema_id, row[2]))
                 last_pregunta_id = cursor.lastrowid
-                last_pregunta = row[1]
+                last_pregunta = row[2]
 
             cursor.execute('''
                 INSERT INTO respuestas(id_pregunta, correcta, respuesta)
                 values(?, ? , ?)
-            ''', (last_pregunta_id, row[2], row[3]))
+            ''', (last_pregunta_id, row[3], row[4]))
 
             db.commit()
 
