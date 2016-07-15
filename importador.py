@@ -13,10 +13,10 @@ History:
 """
 import sqlite3
 import csv
+import os
 
 
-def main():
-    """Main."""
+def file_import(datos):
     db = sqlite3.connect("misdatos.db")
     cursor = db.cursor()
 
@@ -25,7 +25,7 @@ def main():
     last_pregunta = ""
     last_pregunta_id = 0
 
-    with open('datos.csv', newline='') as f:
+    with open(datos, newline='') as f:
         reader = csv.reader(f, delimiter=';', quotechar='"')
         next(reader, None)  # Nos saltamos las cabeceras
         for row in reader:
@@ -49,6 +49,16 @@ def main():
             ''', (last_pregunta_id, row[3], row[4]))
 
         db.commit()
+
+
+def main():
+    """Main."""
+    topdir = 'rawdata'
+    for root, dirnames, filenames in os.walk(topdir, followlinks=True):
+        for filename in filenames:
+            if filename.endswith(('.csv',)):
+                print(os.path.join(root, filename))
+                file_import(os.path.join(root, filename))
 
 
 if __name__ == '__main__':
