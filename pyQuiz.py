@@ -45,27 +45,6 @@ class PyQuiz(object):
 
         self.db.commit()
 
-        # self.carga_datos()
-
-    # def carga_datos(self):
-    #     """Carga de datos."""
-    #     self.cursor.execute('''
-    #         INSERT INTO temas(tema) values ("CENEC LPIC101 Tema 16")
-    #     ''')
-    #
-    #     self.cursor.execute('''
-    #         INSERT INTO preguntas(id_tema, pregunta) values (? , ?)
-    # ''', (self.cursor.lastrowid, 'The first stage of the boot process is:'))
-    #
-    #     id_pregunta = self.cursor.lastrowid
-    #
-    #     self.cursor.execute('''
-    #         INSERT INTO respuestas(id_pregunta, correcta, respuesta)
-    #         values(?, ? , ?)
-    #     ''', (id_pregunta, 0, 'The kernel phase'))
-    #
-    #     self.db.commit()
-
     def get_examen(self, preguntas):
         """Devuelve las preguntas que componen el examen/quiz."""
         self.cursor.execute('''
@@ -127,19 +106,55 @@ class Menu(object):
 
     def _menu_test(self):
 
+        # examen contiene sólo las peguntas
         examen = self.preguntas.get_examen(10)
+        puntuacion = 0
 
         for pregunta in examen:
             self.cls()
 
             print("\n" + pregunta[2] + "\n")
+
+            # obtenemos las preguntas de la base de datos
             respuestas = self.preguntas.get_respuestas(pregunta[0])
 
-            for counter, respuesta in enumerate(respuestas):
-                print("   " + str(counter+1) + " " + respuesta[3])
+            # variable que almacena las respuestas correctas para compararlas
+            # con las respuestas del usuario
+            correctas = []
 
-            print("\nIndique su respuesta y pulse intro")
+            # mostramos las preguntas en pantalla a la vez que guardamos
+            # las respuestas correctas.
+            for counter, respuesta in enumerate(respuestas):
+                print("   " + str(counter+1) + ") " + respuesta[3])
+                if(respuesta[2] == 1):
+                    correctas.append(counter+1)
+
+            # obtenemos las repuestas del usuario
+            print("\nIndique su respuesta/as separadas por comas y pulse intro")
+            userInput = input(">")
+
+            # variable que contendá las respuestas válidas del usuaruio
+            respuesta_usuario_clean = []
+
+            respuestas_usuario = userInput.split(",")
+
+            # eliminamos todo lo que no sean respuestas.
+            for respuesta_usuario in respuestas_usuario:
+                if respuesta_usuario.isnumeric():
+                    respuesta_usuario_clean.append(int(respuesta_usuario))
+
+            # Vemos si las respuestas del usuario son correctas.
+            if set(correctas) == set(respuesta_usuario_clean):
+                puntuacion += 1
+                print ("\n\nCorrecto!!")
+            else:
+                print ("\n\nIncorrecto!!")
+                print ("La(s) pregunta(s) correcta(s) son: " + " ".join(str(x) for x in correctas))
+
+            print ("\n\nPulse intro para continuar")
             input(">")
+
+        print("Ha acertado " + str(puntuacion))
 
     def cls(self):
         """Borrar la pantalla."""
