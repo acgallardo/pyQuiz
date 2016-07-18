@@ -99,6 +99,7 @@ class Menu(object):
                 seleccion = -1
 
             if(seleccion == 0):
+                self.cls()
                 exit = True
             elif seleccion == 1:
                 exit = True
