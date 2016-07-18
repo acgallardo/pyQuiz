@@ -8,7 +8,6 @@ History:
 """
 import sqlite3
 import os
-# import termcolor
 
 
 class PyQuiz(object):
@@ -151,7 +150,7 @@ class Menu(object):
                 print ("\n\nCorrecto!!")
             else:
                 print ("\n\nIncorrecto!!")
-                print ("La(s) pregunta(s) correcta(s) son: " + " ".join(str(x) for x in correctas))
+                print ("La(s) respuesta(s) correcta(s) son: " + " ".join(str(x) for x in correctas))
 
             print ("\n\nPulse intro para continuar")
             input(">")
