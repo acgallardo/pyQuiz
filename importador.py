@@ -38,8 +38,8 @@ def file_import(datos):
 
             if row[2] != last_pregunta:
                 cursor.execute('''
-                    INSERT INTO preguntas(id_tema, pregunta) values (? , ?)
-                ''', (last_tema_id, row[2]))
+                    INSERT INTO preguntas(id_tema, peso, pregunta) values (? , ?, ?)
+                ''', (last_tema_id, row[1], row[2]))
                 last_pregunta_id = cursor.lastrowid
                 last_pregunta = row[2]
 
