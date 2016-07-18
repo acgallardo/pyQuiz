@@ -8,6 +8,7 @@ History:
 """
 import sqlite3
 import os
+# import termcolor
 
 
 class PyQuiz(object):
@@ -75,6 +76,7 @@ class Menu(object):
 
     def __init__(self):
         """Se inicializa el menu y el obeto que proporciona la informacion."""
+        self.numero_preguntas = 10
         self.preguntas = PyQuiz()
         self._menu_principal()
 
@@ -87,7 +89,7 @@ class Menu(object):
 
             print("\n --- Menu principal ---\n")
             print("  1   Hacer test")
-            print("  2   Gestionar preguntas")
+            print("  2   Configurar test")
             print("  0   Salir ")
             print("\n\n")
 
@@ -102,12 +104,12 @@ class Menu(object):
                 exit = True
                 self._menu_test()
             elif seleccion == 2:
-                pass
+                self._config_test()
 
     def _menu_test(self):
 
         # examen contiene sólo las peguntas
-        examen = self.preguntas.get_examen(10)
+        examen = self.preguntas.get_examen(self.numero_preguntas)
         puntuacion = 0
 
         for pregunta in examen:
@@ -155,6 +157,19 @@ class Menu(object):
             input(">")
 
         print("Ha acertado " + str(puntuacion))
+
+    def _config_test(self):
+        self.cls()
+
+        print("El número de preguntas actual es " + str(self.numero_preguntas))
+        try:
+            preguntas = int(input("Número de preguntas que tendrá el examen: "))
+        except ValueError:
+            print("Entrada no válida")
+            preguntas = self.numero_preguntas
+
+        self.numero_preguntas = preguntas
+
 
     def cls(self):
         """Borrar la pantalla."""
