@@ -116,7 +116,7 @@ class Menu(object):
         for pregunta in examen:
             self.cls()
 
-            print("\n" + pregunta[2] + "\n")
+            print("\n" + pregunta[3] + "\n")
 
             # obtenemos las preguntas de la base de datos
             respuestas = self.preguntas.get_respuestas(pregunta[0])
@@ -133,7 +133,7 @@ class Menu(object):
                     correctas.append(counter+1)
 
             # obtenemos las repuestas del usuario
-            print("\nIndique su respuesta/as separadas por comas y pulse intro")
+            print("\nIndique su respuesta/s separadas por comas y pulse intro")
             userInput = input(">")
 
             # variable que contendá las respuestas válidas del usuaruio
