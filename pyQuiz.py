@@ -14,16 +14,22 @@ class PyQuiz(object):
     """PyQuiz object."""
 
     database = "misdatos.db"
+    tp = ['Simple', 'Multipe', 'Write']
 
     def __init__(self):
         """Inicializa el objeto."""
         if not os.path.exists(self.database):
+            self._init_db()
+            self._populate_db()
+        else:
             self._init_db()
 
     def _init_db(self):
         """Inicializa la base de datos."""
         self.db = sqlite3.connect(self.database)
         self.cursor = self.db.cursor()
+
+    def _populate_db(self):
 
         self.cursor.execute('''
         CREATE TABLE IF NOT EXISTS temas(
@@ -32,7 +38,7 @@ class PyQuiz(object):
         ''')
 
         self.cursor.execute('''
-        CREATE TABLE IF NOT EXISTS tipos_reguntas(
+        CREATE TABLE IF NOT EXISTS tipos_preguntas(
             id_tipo INTEGER PRIMARY KEY AUTOINCREMENT,
             tipo TEXT)
         ''')
@@ -54,6 +60,14 @@ class PyQuiz(object):
             respuesta TEXT NOT NULL)
         ''')
 
+        # Data import
+
+        for pregunta in self.tp:
+            self.cursor.execute('''
+                INSERT INTO tipos_preguntas (tipo) VALUES (?)
+            ''', (pregunta,))
+
+        print(self.tp)
         self.db.commit()
 
     def get_examen(self, preguntas):
