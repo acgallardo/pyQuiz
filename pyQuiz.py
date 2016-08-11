@@ -29,9 +29,16 @@ class PyQuiz(object):
         ''')
 
         self.cursor.execute('''
+        CREATE TABLE IF NOT EXISTS tipos_reguntas(
+            id_tipo INTEGER PRIMARY KEY AUTOINCREMENT,
+            tipo TEXT)
+        ''')
+
+        self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS preguntas(
             id_pregunta INTEGER PRIMARY KEY AUTOINCREMENT,
             id_tema INTEGER NOT NULL,
+            id_tipo_pregunta INTEGER,
             peso INTEGER,
             pregunta TEXT)
         ''')
