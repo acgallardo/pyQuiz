@@ -13,13 +13,16 @@ import os
 class PyQuiz(object):
     """PyQuiz object."""
 
+    database = "misdatos.db"
+
     def __init__(self):
         """Inicializa el objeto."""
-        self._init_db()
+        if not os.path.exists(self.database):
+            self._init_db()
 
     def _init_db(self):
         """Inicializa la base de datos."""
-        self.db = sqlite3.connect("misdatos.db")
+        self.db = sqlite3.connect(self.database)
         self.cursor = self.db.cursor()
 
         self.cursor.execute('''
