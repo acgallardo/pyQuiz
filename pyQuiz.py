@@ -47,7 +47,7 @@ class PyQuiz(object):
             CREATE TABLE IF NOT EXISTS preguntas(
             id_pregunta INTEGER PRIMARY KEY AUTOINCREMENT,
             id_tema INTEGER NOT NULL,
-            id_tipo_pregunta INTEGER,
+            id_tipo_pregunta INTEGER NOT NULL DEFAULT(1),
             peso INTEGER,
             pregunta TEXT)
         ''')

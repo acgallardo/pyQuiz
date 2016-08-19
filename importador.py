@@ -25,28 +25,36 @@ def file_import(datos):
     last_pregunta = ""
     last_pregunta_id = 0
 
+    tema = 0
+    peso = 1
+    pregunta = 2
+    correcta = 3
+    respuesta = 4
+    tipo_pregunta = 5
+
+
     with open(datos, newline='') as f:
         reader = csv.reader(f, delimiter=';', quotechar='"')
         next(reader, None)  # Nos saltamos las cabeceras
         for row in reader:
-            if row[0] != last_tema:
+            if row[tema] != last_tema:
                 cursor.execute('''
                     INSERT INTO temas(tema) values (?)
-                ''', (row[0],))
-                last_tema = row[0]
+                ''', (row[tema],))
+                last_tema = row[tema]
                 last_tema_id = cursor.lastrowid
 
-            if row[2] != last_pregunta:
+            if row[pregunta] != last_pregunta:
                 cursor.execute('''
-                    INSERT INTO preguntas(id_tema, peso, pregunta) values (? , ?, ?)
-                ''', (last_tema_id, row[1], row[2]))
+                    INSERT INTO preguntas(id_tema, id_tipo_pregunta, peso, pregunta) values (? , ?, ?, ?)
+                ''', (last_tema_id, row[tipo_pregunta], row[peso], row[pregunta]))
                 last_pregunta_id = cursor.lastrowid
-                last_pregunta = row[2]
+                last_pregunta = row[pregunta]
 
             cursor.execute('''
                 INSERT INTO respuestas(id_pregunta, correcta, respuesta)
                 values(?, ? , ?)
-            ''', (last_pregunta_id, row[3], row[4]))
+            ''', (last_pregunta_id, row[correcta], row[respuesta]))
 
         db.commit()
 
