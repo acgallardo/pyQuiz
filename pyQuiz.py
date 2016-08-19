@@ -140,7 +140,7 @@ class Menu(object):
         for pregunta in examen:
             self.cls()
 
-            print("\n" + pregunta[4] + "\n")
+            print("\n" + pregunta[4].replace('\\n', '\n') + "\n")
 
             # obtenemos las preguntas de la base de datos
             respuestas = self.preguntas.get_respuestas(pregunta[0])
