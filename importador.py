@@ -54,7 +54,9 @@ def file_import(datos):
 def main():
     """Main."""
     topdir = 'rawdata'
-    for root, dirnames, filenames in os.walk(topdir, followlinks=True):
+    for root, dirnames, filenames in os.walk(topdir, topdown=True, followlinks=True):
+        dirnames.sort()
+        filenames.sort()
         for filename in filenames:
             if filename.endswith(('.csv',)):
                 print(os.path.join(root, filename))
